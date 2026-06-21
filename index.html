@@ -1,38 +1,452 @@
-export default {
-  async fetch(request) {
-    const corsHeaders = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    };
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YADAVJI // APEX-TERMINAL</title>
+    <style>
+        :root {
+            --glow-color: #00ff41;
+            --bg-color: #030303;
+            --panel-bg: rgba(10, 10, 10, 0.95);
+            --text-color: #00ff41;
+            --text-dim: #008f11;
+            --border-glow: rgba(0, 255, 65, 0.35);
+            --terminal-red: #ff3333;
+        }
 
-    // Preflight security check ko bypass karne ke liye
-    if (request.method === "OPTIONS") {
-      return new Response(null, { headers: corsHeaders });
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
 
-    const url = new URL(request.url);
-    const num = url.searchParams.get("num") || "";
-    
-    // Original Backend Target URL
-    const targetUrl = `https://anishexploits.com/api/api.php?key=KEY_FB68D42B_RAONUMB&type=number&num=${encodeURIComponent(num)}`;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-    try {
-      const response = await fetch(targetUrl);
-      const data = await response.text();
-      
-      // Response ko proper headers ke sath return karna
-      return new Response(data, {
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "application/json",
-        },
-      });
-    } catch (error) {
-      return new Response(JSON.stringify({ error: "Backend instance offline", details: error.message }), { 
-        status: 500, 
-        headers: corsHeaders 
-      });
-    }
-  },
-};
+        /* Advanced Scanline/CRT Glitch Overlay Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+            z-index: 9999;
+            background-size: 100% 4px, 4px 100%;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 15px;
+            z-index: 3;
+        }
+
+        /* Sleek Header Panel with Live Avatar Glow */
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            border: 2px solid var(--text-color);
+            padding: 30px 20px;
+            background: var(--panel-bg);
+            box-shadow: 0 0 25px var(--border-glow);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .avatar-frame {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 3px solid var(--glow-color);
+            box-shadow: 0 0 20px var(--glow-color), inset 0 0 15px var(--glow-color);
+            object-fit: cover;
+            background: #000;
+            transition: transform 0.5s ease;
+        }
+
+        .profile-img:hover {
+            transform: rotate(360deg) scale(1.05);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 12px var(--glow-color);
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+
+        header p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .terminal-box {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--text-color);
+            box-shadow: 0 0 22px rgba(0, 255, 65, 0.2);
+            padding: 25px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        /* Cybersecurity Bracket Labels */
+        .terminal-box::before {
+            content: "[ SECURE NODE ]";
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--bg-color);
+            padding: 0 10px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            margin-bottom: 18px;
+            border-bottom: 1px dashed var(--text-dim);
+            padding-bottom: 8px;
+            text-shadow: 0 0 5px var(--glow-color);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            background: #000;
+            border: 1px solid var(--text-dim);
+            padding: 16px;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            outline: none;
+            border-radius: 4px;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--glow-color);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+        button {
+            background: transparent;
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+            padding: 16px 24px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: var(--text-color);
+            color: #000;
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        /* Dynamic Memory Grid Logs */
+        .history-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 180px;
+            overflow-y: auto;
+            margin-top: 12px;
+        }
+
+        .history-item {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(0, 143, 17, 0.5);
+            padding: 12px 18px;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .history-item:hover {
+            border-color: var(--glow-color);
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.2);
+        }
+
+        .clear-btn {
+            font-size: 0.85rem;
+            padding: 8px 16px;
+            border: 1px solid var(--terminal-red);
+            color: var(--terminal-red);
+            background: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+            width: fit-content;
+            margin-top: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            background: var(--terminal-red);
+            color: #000;
+            box-shadow: 0 0 12px var(--terminal-red);
+        }
+
+        .output-box {
+            margin-top: 25px;
+            display: none;
+        }
+
+        pre {
+            background: #000;
+            border: 1px solid var(--text-dim);
+            padding: 18px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #33ff33;
+            border-radius: 4px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
+        }
+
+        /* Matrix Hyper-Grid for Social Links */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 12px;
+        }
+
+        .social-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid var(--text-dim);
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .social-btn:hover {
+            border-color: var(--glow-color);
+            background: rgba(0, 255, 65, 0.15);
+            box-shadow: 0 0 15px var(--border-glow);
+            transform: translateY(-3px);
+        }
+
+        .loading {
+            display: none;
+            color: var(--text-color);
+            text-align: center;
+            margin: 20px 0;
+            font-style: italic;
+            font-weight: bold;
+            letter-spacing: 1px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            border-top: 1px solid rgba(0, 143, 17, 0.3);
+            background: #020202;
+            z-index: 3;
+            letter-spacing: 1px;
+        }
+
+        footer strong {
+            color: var(--text-color);
+            text-shadow: 0 0 8px var(--glow-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="avatar-frame">
+                <img src="81810.jpg" alt="Yadavji Admin Avatar" class="profile-img" onerror="this.src='https://placehold.co/150x150/000000/00ff41?text=%E2%98%A2+YADAVJI'">
+            </div>
+            <h1>SYSTEM OVERRIDE v2.0</h1>
+            <p>Secure Database Extraction Endpoint</p>
+        </header>
+
+        <div class="terminal-box">
+            <div class="section-title">[+] INITIALIZE SEARCH PROTOCOL</div>
+            <div class="input-group">
+                <input type="text" id="targetNum" placeholder="Enter Target Number (e.g. 9665...)" autocomplete="off">
+                <button id="searchBtn">EXECUTE EXTRACTION</button>
+            </div>
+
+            <div class="loading" id="loader">[-] ROUTING VIA CLOUDFLARE PROXY PIPELINE... EXTRACTING BUFFER PAYLOAD...</div>
+
+            <div class="output-box" id="resultContainer">
+                <div class="section-title">[+] EXTRACTION REPORT DATA</div>
+                <pre id="output">System idle...</pre>
+            </div>
+        </div>
+
+        <div class="terminal-box">
+            <div class="section-title">[+] LOGGED TARGET MEMORY CACHE</div>
+            <div class="history-box" id="historyLog">
+                <div style="color: var(--text-dim); font-size: 0.85rem;">No previous logs found in cache memory.</div>
+            </div>
+            <button class="clear-btn" id="clearHistoryBtn" style="display:none;">PURGE LOG CACHE</button>
+        </div>
+
+        <div class="terminal-box">
+            <div class="section-title">[+] ESTABLISH DIRECT DIRECTORY CHANNELS</div>
+            <div class="social-grid">
+                <a href="https://instagram.com/punityaduvanshii" target="_blank" class="social-btn">📷 INSTAGRAM</a>
+                <a href="https://t.me/punityaduvanshii" target="_blank" class="social-btn">✈️ TELEGRAM</a>
+                <a href="https://wa.me/966507241344" target="_blank" class="social-btn">💬 WHATSAPP</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>CORE ARCHITECTURE ENGINE DESIGNED BY: <strong>YADAVJI</strong></p>
+    </footer>
+
+    <script>
+        const WORKER_URL = 'https://green-lab-ead4.yaduvanshiipunit.workers.dev';
+
+        function displayHistory() {
+            const historyLog = document.getElementById('historyLog');
+            const clearBtn = document.getElementById('clearHistoryBtn');
+            let searchHistory = JSON.parse(localStorage.getItem('terminal_history')) || [];
+
+            if (searchHistory.length === 0) {
+                historyLog.innerHTML = `<div style="color: var(--text-dim); font-size: 0.85rem;">No previous logs found in cache memory.</div>`;
+                clearBtn.style.display = 'none';
+                return;
+            }
+
+            clearBtn.style.display = 'block';
+            historyLog.innerHTML = '';
+            
+            searchHistory.slice().reverse().forEach(num => {
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `<span>[TARGET METRIC]: ${num}</span><span style="color:var(--glow-color); font-weight:bold;">[RE-RUN]</span>`;
+                item.addEventListener('click', () => {
+                    document.getElementById('targetNum').value = num;
+                    document.getElementById('searchBtn').click();
+                });
+                historyLog.appendChild(item);
+            });
+        }
+
+        function saveToHistory(num) {
+            let searchHistory = JSON.parse(localStorage.getItem('terminal_history')) || [];
+            if (!searchHistory.includes(num)) {
+                searchHistory.push(num);
+                if (searchHistory.length > 10) searchHistory.shift();
+                localStorage.setItem('terminal_history', JSON.stringify(searchHistory));
+                displayHistory();
+            }
+        }
+
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const numInput = document.getElementById('targetNum').value.trim();
+            const loader = document.getElementById('loader');
+            const resultContainer = document.getElementById('resultContainer');
+            const output = document.getElementById('output');
+
+            if (!numInput) {
+                alert('Terminal Error: Query pointer allocation required.');
+                return;
+            }
+
+            saveToHistory(numInput);
+
+            loader.style.display = 'block';
+            resultContainer.style.display = 'block';
+            output.textContent = 'Connecting via Cloudflare secure routing mesh...\nSynchronizing encryption layers...\nPulling network text payload...';
+
+            const finalProxyUrl = `${WORKER_URL}?num=${encodeURIComponent(numInput)}`;
+
+            try {
+                const response = await fetch(finalProxyUrl);
+                const rawData = await response.text();
+                
+                try {
+                    const parsed = JSON.parse(rawData);
+                    output.textContent = JSON.stringify(parsed, null, 4);
+                } catch {
+                    output.textContent = rawData || "[*] Empty transmission stream received.";
+                }
+
+            } catch (error) {
+                output.textContent = `[CRITICAL CONTROL EXCEPTION] PIPELINE DROPPED.\nLogs: ${error.message}`;
+            } finally {
+                loader.style.display = 'none';
+            }
+        });
+
+        document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+            localStorage.removeItem('terminal_history');
+            displayHistory();
+        });
+
+        document.getElementById('targetNum').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('searchBtn').click();
+            }
+        });
+
+        displayHistory();
+    </script>
+</body>
+</html>

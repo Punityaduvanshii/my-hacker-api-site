@@ -3,360 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YADAVJI // DATA PARSING TERMINAL</title>
+    <title>YADAVJI // ADVANCED-TERMINAL</title>
     <style>
         :root {
-            --primary-color: #00ff00;
+            --glow-color: #00ff41;
             --bg-color: #050505;
-            --panel-bg: #0f0f0f;
-            --text-color: #00ff00;
-            --error-color: #ff0033;
-            --warning-color: #ffcc00;
-            --font-family: 'Courier New', Courier, monospace;
+            --panel-bg: #0d0d0d;
+            --text-color: #00ff41;
+            --text-dim: #008f11;
+            --border-glow: rgba(0, 255, 65, 0.3);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: var(--font-family);
-            padding: 15px;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            width: 100%;
-            flex: 1;
-        }
-
-        /* Top Header Image Banner Section */
-        .banner-container {
-            width: 100%;
-            height: 220px;
-            border: 1px solid var(--primary-color);
-            border-bottom: none;
-            overflow: hidden;
+            justify-content: space-between;
+            overflow-x: hidden;
             position: relative;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
-        .banner-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.5;
-            /* Cyberpunk matrix green tint effect */
-            filter: grayscale(1) sepia(1) hue-rotate(85deg) saturate(3) brightness(0.7);
-        }
-
-        .banner-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            text-shadow: 0 0 15px #000;
-            width: 100%;
+        /* Scanline CRT Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 9999;
+            background-size: 100% 3px, 3px 100%;
             pointer-events: none;
         }
 
-        .banner-text h1 {
-            font-size: 2rem;
-            letter-spacing: 4px;
-            text-shadow: 0 0 10px var(--primary-color);
-            color: #fff;
+        .container {
+            width: 100%;
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 15px;
+            z-index: 3;
         }
 
-        /* Dashboard Grid Layout */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 15px;
-            margin-top: 15px;
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            border: 1px solid var(--text-dim);
+            padding: 20px;
+            background: rgba(13, 13, 13, 0.8);
+            box-shadow: 0 0 15px var(--border-glow);
+            position: relative;
+            overflow: hidden;
         }
 
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
+        /* Profile Image Styling */
+        .profile-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 2px solid var(--glow-color);
+            box-shadow: 0 0 15px var(--glow-color);
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            text-shadow: 0 0 10px var(--glow-color);
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            text-transform: uppercase;
         }
 
         .terminal-box {
             background-color: var(--panel-bg);
-            border: 1px solid var(--primary-color);
-            border-radius: 2px;
-            padding: 15px;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+            border: 1px solid var(--text-color);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+            padding: 25px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--text-dim);
+            padding-bottom: 5px;
+            text-shadow: 0 0 5px var(--glow-color);
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .input-wrapper {
-            display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         input[type="text"] {
-            flex: 1;
+            width: 100%;
             background: #000;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 10px;
-            font-family: var(--font-family);
-            font-size: 1rem;
+            border: 1px solid var(--text-dim);
+            padding: 14px;
+            color: var(--text-color);
+            font-size: 1.1rem;
             outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--glow-color);
+            box-shadow: 0 0 12px rgba(0, 255, 65, 0.4);
         }
 
         button {
-            background-color: transparent;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 10px 20px;
-            font-family: var(--font-family);
-            font-weight: bold;
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 14px 20px;
+            font-size: 1rem;
             cursor: pointer;
+            font-weight: bold;
             text-transform: uppercase;
+            transition: all 0.3s ease;
         }
 
         button:hover {
-            background-color: var(--primary-color);
+            background: var(--text-color);
             color: #000;
-            box-shadow: 0 0 10px var(--primary-color);
+            box-shadow: 0 0 15px var(--glow-color);
         }
 
-        .console-output {
-            background-color: #000;
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            padding: 12px;
-            min-height: 250px;
-            font-size: 0.85rem;
-            overflow-y: auto;
-            max-height: 400px;
-            white-space: pre-wrap;
-        }
-
-        /* History Sidebar Panel */
-        .sidebar-panel {
+        /* History Panel */
+        .history-box {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-
-        .history-list {
-            list-style: none;
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
             margin-top: 10px;
         }
 
         .history-item {
-            padding: 8px;
-            border: 1px dashed rgba(0, 255, 0, 0.3);
-            margin-bottom: 5px;
-            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 143, 17, 0.3);
+            padding: 8px 12px;
             font-size: 0.85rem;
-            background: #000;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
         }
 
         .history-item:hover {
-            background: rgba(0, 255, 0, 0.1);
-            border-style: solid;
+            border-color: var(--glow-color);
+            background: rgba(0, 255, 65, 0.05);
         }
 
-        /* Connect Hub Section */
-        .social-box {
+        .clear-btn {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border: 1px solid #ff3333;
+            color: #ff3333;
+            background: transparent;
+            cursor: pointer;
+            width: fit-content;
+            margin-top: 5px;
+        }
+
+        .clear-btn:hover {
+            background: #ff3333;
+            color: #000;
+            box-shadow: 0 0 8px #ff3333;
+        }
+
+        .output-box {
+            margin-top: 20px;
+            display: none;
+        }
+
+        pre {
             background: #000;
-            border: 1px solid var(--primary-color);
-            padding: 12px;
+            border: 1px solid var(--text-dim);
+            padding: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #33ff33;
         }
 
-        .social-link {
-            display: block;
-            color: var(--primary-color);
+        /* Social Networks Terminal Grid */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .social-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid var(--text-dim);
+            color: var(--text-color);
             text-decoration: none;
-            padding: 8px;
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            margin-top: 8px;
-            text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: bold;
             transition: all 0.3s ease;
+            background: rgba(0,0,0,0.3);
         }
 
-        .social-link:hover {
-            background: var(--primary-color);
-            color: #000;
-            box-shadow: 0 0 8px var(--primary-color);
+        .social-btn:hover {
+            border-color: var(--glow-color);
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 10px var(--border-glow);
+            transform: translateY(-2px);
         }
 
-        .log-warn { color: var(--warning-color); }
-        .log-err { color: var(--error-color); }
-        .loading { animation: blink 1s infinite; }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+        .loading {
+            display: none;
+            color: var(--text-color);
+            text-align: center;
+            margin: 15px 0;
+            font-style: italic;
         }
 
         footer {
             text-align: center;
-            padding: 15px;
-            margin-top: 20px;
-            font-size: 0.8rem;
-            border-top: 1px solid rgba(0, 255, 0, 0.2);
+            padding: 20px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            border-top: 1px solid rgba(0, 143, 17, 0.2);
+            background: #000;
+            z-index: 3;
+        }
+
+        footer strong {
+            color: var(--text-color);
+            text-shadow: 0 0 5px var(--glow-color);
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="banner-container">
-            <img class="banner-image" src="https://lh3.googleusercontent.com/d/1_9iLby1ZcT5V18N61p2-wshXmZzBvSia" alt="Shri Krishna Cyber Banner" onerror="this.src='https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000'">
-            <div class="banner-text">
-                <h1>YADAVJI SYSTEM INTERFACE</h1>
-                <p style="font-size: 0.75rem; letter-spacing: 1px; color: #888;">CENTRAL DATA ROUTING MANAGEMENT</p>
+        <!-- Top Profile & Heading -->
+        <header>
+            <!-- Note: Replace 'YOUR_IMAGE_URL' with your uploaded 81810.jpg path later -->
+            <img src="YOUR_IMAGE_URL" alt="Yadavji Profile" class="profile-img" onerror="this.src='https://placehold.co/150x150/000000/00ff41?text=YADAVJI'">
+            <h1>SYSTEM OVERRIDE v2.0</h1>
+            <p>Secure Database Extraction Endpoint</p>
+        </header>
+
+        <!-- Main Query Panel -->
+        <div class="terminal-box">
+            <div class="section-title">[+] INITIALIZE SEARCH PROTOCOL</div>
+            <div class="input-group">
+                <input type="text" id="targetNum" placeholder="Enter Target Number (e.g. 9665...)" autocomplete="off">
+                <button id="searchBtn">EXECUTE EXTRACTION</button>
+            </div>
+
+            <div class="loading" id="loader">[-] ROUTING VIA CLOUDFLARE SECURE WORKER... PAYLOAD FETCH ACTIVE...</div>
+
+            <div class="output-box" id="resultContainer">
+                <div class="section-title">[+] EXTRACTION REPORT DATA</div>
+                <pre id="output">System idle...</pre>
             </div>
         </div>
 
-        <div class="dashboard-grid">
-            <div class="terminal-box">
-                <div class="input-group">
-                    <label for="phone-number">> TARGET QUERY SELECTION:</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="phone-number" placeholder="Enter standard parameter..." autocomplete="off">
-                        <button id="search-btn" onclick="initiateRequest()">QUERY</button>
-                    </div>
-                </div>
-
-                <div style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">> TERMINAL FEED:</div>
-                <div class="console-output" id="output-screen">System idle... Waiting for entry packet.</div>
+        <!-- History Feature Panel -->
+        <div class="terminal-box">
+            <div class="section-title">[+] LOGGED TARGET HISTORY</div>
+            <div class="history-box" id="historyLog">
+                <div style="color: var(--text-dim); font-size: 0.85rem;">No previous logs found in cache memory.</div>
             </div>
-
-            <div class="sidebar-panel">
-                <div class="terminal-box" style="flex: 1;">
-                    <div style="font-size: 0.85rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 5px; font-weight: bold;">
-                        [#] SEARCH HISTORY
-                    </div>
-                    <ul class="history-list" id="history-box">
-                        <li style="color: #666; font-size: 0.8rem; text-align: center;">No active cache logs.</li>
-                    </ul>
-                </div>
-
-                <div class="social-box">
-                    <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; text-align: center; border-bottom: 1px dashed rgba(0,255,0,0.3); padding-bottom: 5px;">
-                        [!] CONNECT HUB
-                    </div>
-                    <a href="https://instagram.com/punityaduvanshii" target="_blank" class="social-link">INSTAGRAM PROFILE</a>
-                    <a href="https://t.me/Punityaduvanshii" target="_blank" class="social-link">TELEGRAM CHANNEL</a>
-                    <a href="https://wa.me/966507241344" target="_blank" class="social-link">WHATSAPP CHAT</a>
-                </div>
-            </div>
+            <button class="clear-btn" id="clearHistoryBtn" style="display:none;">PURGE CACHE</button>
         </div>
 
-        <footer>
-            SYSTEM DESIGN ARCHITECTURE BY: <span style="text-shadow: 0 0 5px var(--primary-color);">Yadavji</span>
-        </footer>
+        <!-- Developer Communication Channels -->
+        <div class="terminal-box">
+            <div class="section-title">[+] DEVELOPER ACCESS CHANNELS</div>
+            <div class="social-grid">
+                <a href="https://instagram.com/punityaduvanshii" target="_blank" class="social-btn">INSTAGRAM</a>
+                <a href="https://t.me/punityaduvanshii" target="_blank" class="social-btn">TELEGRAM</a>
+                <a href="https://wa.me/966507241344" target="_blank" class="social-btn">WHATSAPP</a>
+            </div>
+        </div>
     </div>
 
-    <script>
-        let searchHistoryCache = [];
+    <footer>
+        <p>CORE SYSTEM DESIGNED & MANIFESTED BY: <strong>YADAVJI</strong></p>
+    </footer>
 
-        function initiateRequest() {
-            const queryValue = document.getElementById('phone-number').value.trim();
-            const outputScreen = document.getElementById('output-screen');
-            
-            if (!queryValue) {
-                outputScreen.innerHTML = `<span class="log-err">[!] ERROR: Query value cannot be empty.</span>`;
+    <script>
+        // Custom Worker Proxy Endpoint Configuration
+        const WORKER_URL = 'https://green-lab-ead4.yaduvanshiipunit.workers.dev';
+
+        // Load History immediately from localStorage
+        function displayHistory() {
+            const historyLog = document.getElementById('historyLog');
+            const clearBtn = document.getElementById('clearHistoryBtn');
+            let searchHistory = JSON.parse(localStorage.getItem('terminal_history')) || [];
+
+            if (searchHistory.length === 0) {
+                historyLog.innerHTML = `<div style="color: var(--text-dim); font-size: 0.85rem;">No previous logs found in cache memory.</div>`;
+                clearBtn.style.display = 'none';
                 return;
             }
 
-            updateHistoryLog(queryValue);
-
-            // API Endpoint Integration
-            const destinationUrl = `https://anishexploits.com/api/api.php?key=KEY_FB68D42B_RAONUMB&type=number&num=${queryValue}`;
+            clearBtn.style.display = 'block';
+            historyLog.innerHTML = '';
             
-            outputScreen.innerHTML = `[~] Initiating internal handshake matrix...\n`;
-            
-            // Starts auto-retry function: 3 attempts maximum, 1.5s delay between failures
-            performRequestWithRetry(destinationUrl, queryValue, 3, 1500);
+            searchHistory.reverse().forEach(num => {
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `<span>[TARGET]: ${num}</span><span style="color:var(--text-dim); font-size:0.75rem;">RUN</span>`;
+                item.addEventListener('click', () => {
+                    document.getElementById('targetNum').value = num;
+                    document.getElementById('searchBtn').click();
+                });
+                historyLog.appendChild(item);
+            });
         }
 
-        // Recursive auto-retry mechanism
-        async function performRequestWithRetry(url, query, maxRetries, delayTime) {
-            const outputScreen = document.getElementById('output-screen');
-            let currentAttempt = 4 - maxRetries;
+        function saveToHistory(num) {
+            let searchHistory = JSON.parse(localStorage.getItem('terminal_history')) || [];
+            if (!searchHistory.includes(num)) {
+                searchHistory.push(num);
+                // Maintain maximum 10 items in log cache
+                if (searchHistory.length > 10) searchHistory.shift();
+                localStorage.setItem('terminal_history', JSON.stringify(searchHistory));
+                displayHistory();
+            }
+        }
+
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const numInput = document.getElementById('targetNum').value.trim();
+            const loader = document.getElementById('loader');
+            const resultContainer = document.getElementById('resultContainer');
+            const output = document.getElementById('output');
+
+            if (!numInput) {
+                alert('Terminal Error: Input required.');
+                return;
+            }
+
+            // Save searched item to memory logs
+            saveToHistory(numInput);
+
+            loader.style.display = 'block';
+            resultContainer.style.display = 'block';
+            output.textContent = 'Contacting secure worker instance...\nEstablishing tunnel pipeline...\nRetrieving content string...';
+
+            const finalProxyUrl = `${WORKER_URL}?num=${encodeURIComponent(numInput)}`;
 
             try {
-                outputScreen.innerHTML += `[~] Transferring data packet [Attempt #${currentAttempt}]...\n`;
+                const response = await fetch(finalProxyUrl);
+                if (!response.ok) throw new Error('Secure proxy pipe connection failed.');
+
+                const rawData = await response.text();
                 
-                const connectionResult = await fetch(url);
-                
-                if (!connectionResult.ok) {
-                    throw new Error(`HTTP Error Code: ${connectionResult.status}`);
+                try {
+                    const parsed = JSON.parse(rawData);
+                    output.textContent = JSON.stringify(parsed, null, 4);
+                } catch {
+                    output.textContent = rawData || "[*] Empty structural payload returned.";
                 }
 
-                const serializedData = await connectionResult.json();
-                
-                outputScreen.innerHTML += `[+] Node connection stable. Content parsed successfully.\n\n`;
-                outputScreen.innerHTML += JSON.stringify(serializedData, null, 4);
-
-            } catch (networkError) {
-                outputScreen.innerHTML += `<span class="log-warn">[!] Direct connection packet dropped: ${networkError.message}</span>\n`;
-                
-                if (maxRetries > 1) {
-                    outputScreen.innerHTML += `<span class="log-warn">[~] Server busy. Pausing for ${delayTime/1000}s before automatic retry sequence...</span>\n\n`;
-                    
-                    await new Promise(resolve => setTimeout(resolve, delayTime));
-                    return performRequestWithRetry(url, query, maxRetries - 1, delayTime);
-                } else {
-                    outputScreen.innerHTML += `<span class="log-err">\n[!] CRITICAL: Max request attempts reached.\n[i] Resolution: Server endpoint is unresponsive. Refresh or retry after some time.</span>`;
-                }
-            }
-        }
-
-        // History Tracker Logic
-        function updateHistoryLog(newItem) {
-            if (!searchHistoryCache.includes(newItem)) {
-                searchHistoryCache.unshift(newItem);
-                if (searchHistoryCache.length > 5) searchHistoryCache.pop();
-                
-                const historyBox = document.getElementById('history-box');
-                historyBox.innerHTML = '';
-                
-                searchHistoryCache.forEach(entry => {
-                    const itemElement = document.createElement('li');
-                    itemElement.className = 'history-item';
-                    itemElement.innerText = `>> ${entry}`;
-                    itemElement.onclick = () => {
-                        document.getElementById('phone-number').value = entry;
-                        initiateRequest();
-                    };
-                    historyBox.appendChild(itemElement);
-                });
-            }
-        }
-
-        document.getElementById("phone-number").addEventListener("keyup", function(event) {
-            if (event.key === "Enter") {
-                initiateRequest();
+            } catch (error) {
+                output.textContent = `[CRITICAL EXCEPTION] EXTRACTION PIPELINE ABORTED.\nLogs: ${error.message}\nResolution: Check if network routes or key parameters are structured correctly.`;
+            } finally {
+                loader.style.display = 'none';
             }
         });
+
+        document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+            localStorage.removeItem('terminal_history');
+            displayHistory();
+        });
+
+        document.getElementById('targetNum').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('searchBtn').click();
+            }
+        });
+
+        // Initialize history list view layout
+        displayHistory();
     </script>
 </body>
 </html>

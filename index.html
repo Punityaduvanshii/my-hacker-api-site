@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YADAVJI // ADVANCED-TERMINAL</title>
+    <title>YADAVJI // ULTRA-TERMINAL</title>
     <style>
         :root {
             --glow-color: #00ff41;
@@ -11,7 +11,7 @@
             --panel-bg: #0d0d0d;
             --text-color: #00ff41;
             --text-dim: #008f11;
-            --border-glow: rgba(0, 255, 65, 0.3);
+            --border-glow: rgba(0, 255, 65, 0.25);
         }
 
         * {
@@ -56,22 +56,26 @@
             text-align: center;
             margin-bottom: 25px;
             border: 1px solid var(--text-dim);
-            padding: 20px;
-            background: rgba(13, 13, 13, 0.8);
-            box-shadow: 0 0 15px var(--border-glow);
-            position: relative;
-            overflow: hidden;
+            padding: 25px;
+            background: rgba(13, 13, 13, 0.9);
+            box-shadow: 0 0 20px var(--border-glow);
+            border-radius: 4px;
         }
 
-        /* Profile Image Styling */
+        /* Centered Rounded Profile Image */
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
         .profile-img {
-            width: 110px;
-            height: 110px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             border: 2px solid var(--glow-color);
             box-shadow: 0 0 15px var(--glow-color);
             object-fit: cover;
-            margin-bottom: 15px;
         }
 
         header h1 {
@@ -85,6 +89,7 @@
             color: var(--text-dim);
             font-size: 0.9rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .terminal-box {
@@ -102,6 +107,7 @@
             border-bottom: 1px dashed var(--text-dim);
             padding-bottom: 5px;
             text-shadow: 0 0 5px var(--glow-color);
+            font-weight: bold;
         }
 
         .input-group {
@@ -144,7 +150,7 @@
             box-shadow: 0 0 15px var(--glow-color);
         }
 
-        /* History Panel */
+        /* History Feature Logs */
         .history-box {
             display: flex;
             flex-direction: column;
@@ -155,30 +161,31 @@
         }
 
         .history-item {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 143, 17, 0.3);
-            padding: 8px 12px;
-            font-size: 0.85rem;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 143, 17, 0.4);
+            padding: 10px 15px;
+            font-size: 0.9rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .history-item:hover {
             border-color: var(--glow-color);
-            background: rgba(0, 255, 65, 0.05);
+            background: rgba(0, 255, 65, 0.08);
         }
 
         .clear-btn {
-            font-size: 0.75rem;
-            padding: 4px 8px;
+            font-size: 0.8rem;
+            padding: 6px 12px;
             border: 1px solid #ff3333;
             color: #ff3333;
             background: transparent;
             cursor: pointer;
             width: fit-content;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
         .clear-btn:hover {
@@ -204,7 +211,7 @@
             color: #33ff33;
         }
 
-        /* Social Networks Terminal Grid */
+        /* Social Network Connections Grid */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -216,20 +223,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 12px;
+            padding: 14px;
             border: 1px solid var(--text-dim);
             color: var(--text-color);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: bold;
             transition: all 0.3s ease;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.4);
         }
 
         .social-btn:hover {
             border-color: var(--glow-color);
-            background: rgba(0, 255, 65, 0.1);
-            box-shadow: 0 0 10px var(--border-glow);
+            background: rgba(0, 255, 65, 0.12);
+            box-shadow: 0 0 12px var(--border-glow);
             transform: translateY(-2px);
         }
 
@@ -260,15 +267,14 @@
 <body>
 
     <div class="container">
-        <!-- Top Profile & Heading -->
         <header>
-            <!-- Note: Replace 'YOUR_IMAGE_URL' with your uploaded 81810.jpg path later -->
-            <img src="YOUR_IMAGE_URL" alt="Yadavji Profile" class="profile-img" onerror="this.src='https://placehold.co/150x150/000000/00ff41?text=YADAVJI'">
+            <div class="profile-container">
+                <img src="81810.jpg" alt="Yadavji Profile" class="profile-img" onerror="this.src='https://placehold.co/150x150/000000/00ff41?text=YADAVJI'">
+            </div>
             <h1>SYSTEM OVERRIDE v2.0</h1>
             <p>Secure Database Extraction Endpoint</p>
         </header>
 
-        <!-- Main Query Panel -->
         <div class="terminal-box">
             <div class="section-title">[+] INITIALIZE SEARCH PROTOCOL</div>
             <div class="input-group">
@@ -276,7 +282,7 @@
                 <button id="searchBtn">EXECUTE EXTRACTION</button>
             </div>
 
-            <div class="loading" id="loader">[-] ROUTING VIA CLOUDFLARE SECURE WORKER... PAYLOAD FETCH ACTIVE...</div>
+            <div class="loading" id="loader">[-] ROUTING VIA CLOUDFLARE WORKER PROXY... PAYLOAD FETCH ACTIVE...</div>
 
             <div class="output-box" id="resultContainer">
                 <div class="section-title">[+] EXTRACTION REPORT DATA</div>
@@ -284,16 +290,14 @@
             </div>
         </div>
 
-        <!-- History Feature Panel -->
         <div class="terminal-box">
             <div class="section-title">[+] LOGGED TARGET HISTORY</div>
             <div class="history-box" id="historyLog">
                 <div style="color: var(--text-dim); font-size: 0.85rem;">No previous logs found in cache memory.</div>
             </div>
-            <button class="clear-btn" id="clearHistoryBtn" style="display:none;">PURGE CACHE</button>
+            <button class="clear-btn" id="clearHistoryBtn" style="display:none;">PURGE CACHE memory</button>
         </div>
 
-        <!-- Developer Communication Channels -->
         <div class="terminal-box">
             <div class="section-title">[+] DEVELOPER ACCESS CHANNELS</div>
             <div class="social-grid">
@@ -309,10 +313,10 @@
     </footer>
 
     <script>
-        // Custom Worker Proxy Endpoint Configuration
+        // Live cloudflare worker configuration route
         const WORKER_URL = 'https://green-lab-ead4.yaduvanshiipunit.workers.dev';
 
-        // Load History immediately from localStorage
+        // History Management Core
         function displayHistory() {
             const historyLog = document.getElementById('historyLog');
             const clearBtn = document.getElementById('clearHistoryBtn');
@@ -327,10 +331,10 @@
             clearBtn.style.display = 'block';
             historyLog.innerHTML = '';
             
-            searchHistory.reverse().forEach(num => {
+            searchHistory.slice().reverse().forEach(num => {
                 const item = document.createElement('div');
                 item.className = 'history-item';
-                item.innerHTML = `<span>[TARGET]: ${num}</span><span style="color:var(--text-dim); font-size:0.75rem;">RUN</span>`;
+                item.innerHTML = `<span>[TARGET LOG]: ${num}</span><span style="color:var(--glow-color); font-size:0.8rem;">[RUN]</span>`;
                 item.addEventListener('click', () => {
                     document.getElementById('targetNum').value = num;
                     document.getElementById('searchBtn').click();
@@ -343,8 +347,7 @@
             let searchHistory = JSON.parse(localStorage.getItem('terminal_history')) || [];
             if (!searchHistory.includes(num)) {
                 searchHistory.push(num);
-                // Maintain maximum 10 items in log cache
-                if (searchHistory.length > 10) searchHistory.shift();
+                if (searchHistory.length > 10) searchHistory.shift(); // Max 10 items cached
                 localStorage.setItem('terminal_history', JSON.stringify(searchHistory));
                 displayHistory();
             }
@@ -357,22 +360,21 @@
             const output = document.getElementById('output');
 
             if (!numInput) {
-                alert('Terminal Error: Input required.');
+                alert('Terminal Error: Target payload index input required.');
                 return;
             }
 
-            // Save searched item to memory logs
             saveToHistory(numInput);
 
             loader.style.display = 'block';
             resultContainer.style.display = 'block';
-            output.textContent = 'Contacting secure worker instance...\nEstablishing tunnel pipeline...\nRetrieving content string...';
+            output.textContent = 'Connecting to private Cloudflare proxy layer...\nBypassing same-origin CORS blocks...\nRequesting target backend payload string...';
 
             const finalProxyUrl = `${WORKER_URL}?num=${encodeURIComponent(numInput)}`;
 
             try {
                 const response = await fetch(finalProxyUrl);
-                if (!response.ok) throw new Error('Secure proxy pipe connection failed.');
+                if (!response.ok) throw new Error('Secure proxy pipe connection dropped by server endpoint.');
 
                 const rawData = await response.text();
                 
@@ -384,7 +386,7 @@
                 }
 
             } catch (error) {
-                output.textContent = `[CRITICAL EXCEPTION] EXTRACTION PIPELINE ABORTED.\nLogs: ${error.message}\nResolution: Check if network routes or key parameters are structured correctly.`;
+                output.textContent = `[CRITICAL EXCEPTION] EXTRACTION PIPELINE ABORTED.\nLogs: ${error.message}\nResolution: Please verify if the connection is stable or your worker server is running.`;
             } finally {
                 loader.style.display = 'none';
             }
@@ -401,7 +403,7 @@
             }
         });
 
-        // Initialize history list view layout
+        // Initialize history on load
         displayHistory();
     </script>
 </body>

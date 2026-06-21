@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YADAVJI // TERMINAL-ACCESS</title>
+    <style>
+        :root {
+            --glow-color: #00ff41;
+            --bg-color: #050505;
+            --panel-bg: #0d0d0d;
+            --text-color: #00ff41;
+            --text-dim: #008f11;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            z-index: 3;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px dashed var(--text-dim);
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            text-shadow: 0 0 10px var(--glow-color);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .terminal-box {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--text-color);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            padding: 25px;
+            border-radius: 5px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            background: #000;
+            border: 1px solid var(--text-dim);
+            padding: 12px;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--glow-color);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 12px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: var(--text-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+
+        .output-box {
+            margin-top: 25px;
+            border-top: 1px dashed var(--text-dim);
+            padding-top: 20px;
+            display: none;
+        }
+
+        .output-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        pre {
+            background: #000;
+            border: 1px solid var(--text-dim);
+            padding: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #33ff33;
+        }
+
+        .loading {
+            display: none;
+            color: var(--text-color);
+            text-align: center;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            border-top: 1px solid rgba(0, 143, 17, 0.2);
+            background: #000;
+            z-index: 3;
+        }
+
+        footer strong {
+            color: var(--text-color);
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>SYSTEM OVERRIDE v1.0</h1>
+            <p>TARGET DATABASE SEARCH TERMINAL</p>
+        </header>
+
+        <div class="terminal-box">
+            <div class="input-group">
+                <label for="targetNum">Enter Target Number:</label>
+                <div class="input-wrapper">
+                    <input type="text" id="targetNum" placeholder="e.g. 919876543210" autocomplete="off">
+                </div>
+                <button id="searchBtn">EXECUTE EXTRACTION</button>
+            </div>
+
+            <div class="loading" id="loader">[-] CONNECTING TO DATABASE... PLEASE WAIT...</div>
+
+            <div class="output-box" id="resultContainer">
+                <h3>[+] EXTRACTION REPORT:</h3>
+                <pre id="output">Awaiting command...</pre>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>SYSTEM POWERED & DEVELOPED BY: <strong>YADAVJI</strong></p>
+    </footer>
+
+    <script>
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const numInput = document.getElementById('targetNum').value.trim();
+            const loader = document.getElementById('loader');
+            const resultContainer = document.getElementById('resultContainer');
+            const output = document.getElementById('output');
+
+            if (!numInput) {
+                alert('Please enter a valid number!');
+                return;
+            }
+
+            loader.style.display = 'block';
+            resultContainer.style.display = 'block';
+            output.textContent = 'Initializing secure handshake...\nRequesting payload structure...';
+
+            const apiUrl = `https://anishexploits.com/api/api.php?key=KEY_FB68D42B_RAONUMB&type=number&num=${encodeURIComponent(numInput)}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP Error! Status: ${response.status}`);
+                }
+
+                const contentType = response.headers.get("content-type");
+                let data;
+                
+                if (contentType && contentType.includes("application/json")) {
+                    const jsonData = await response.json();
+                    data = JSON.stringify(jsonData, null, 4);
+                } else {
+                    data = await response.text();
+                }
+
+                output.textContent = data;
+
+            } catch (error) {
+                output.textContent = `[ERROR] DATA EXTRACTION FAILED.\nDetails: ${error.message}\nTip: Check network connectivity or API CORS permissions.`;
+            } finally {
+                loader.style.display = 'none';
+            }
+        });
+
+        document.getElementById('targetNum').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('searchBtn').click();
+            }
+        });
+    </script>
+</body>
+</html>

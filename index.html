@@ -33,7 +33,7 @@
             position: relative;
         }
 
-        /* Advanced Scanline/CRT Glitch Overlay Effect */
+        /* CRT Scanline Effect */
         body::before {
             content: " ";
             display: block;
@@ -53,7 +53,6 @@
             z-index: 3;
         }
 
-        /* Sleek Header Panel with Live Avatar Glow */
         header {
             text-align: center;
             margin-bottom: 25px;
@@ -62,7 +61,6 @@
             background: var(--panel-bg);
             box-shadow: 0 0 25px var(--border-glow);
             border-radius: 8px;
-            position: relative;
         }
 
         .avatar-frame {
@@ -76,14 +74,9 @@
             height: 130px;
             border-radius: 50%;
             border: 3px solid var(--glow-color);
-            box-shadow: 0 0 20px var(--glow-color), inset 0 0 15px var(--glow-color);
+            box-shadow: 0 0 20px var(--glow-color);
             object-fit: cover;
             background: #000;
-            transition: transform 0.5s ease;
-        }
-
-        .profile-img:hover {
-            transform: rotate(360deg) scale(1.05);
         }
 
         header h1 {
@@ -91,7 +84,6 @@
             text-shadow: 0 0 12px var(--glow-color);
             letter-spacing: 4px;
             margin-bottom: 8px;
-            font-weight: 900;
         }
 
         header p {
@@ -111,7 +103,6 @@
             position: relative;
         }
 
-        /* Cybersecurity Bracket Labels */
         .terminal-box::before {
             content: "[ SECURE NODE ]";
             position: absolute;
@@ -121,7 +112,6 @@
             padding: 0 10px;
             font-size: 0.8rem;
             color: var(--text-color);
-            font-weight: bold;
         }
 
         .section-title {
@@ -130,8 +120,6 @@
             border-bottom: 1px dashed var(--text-dim);
             padding-bottom: 8px;
             text-shadow: 0 0 5px var(--glow-color);
-            font-weight: bold;
-            letter-spacing: 1px;
         }
 
         .input-group {
@@ -150,12 +138,6 @@
             outline: none;
             border-radius: 4px;
             letter-spacing: 2px;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--glow-color);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
         }
 
         button {
@@ -178,7 +160,6 @@
             box-shadow: 0 0 20px var(--glow-color);
         }
 
-        /* Dynamic Memory Grid Logs */
         .history-box {
             display: flex;
             flex-direction: column;
@@ -198,13 +179,6 @@
             align-items: center;
             border-radius: 4px;
             cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .history-item:hover {
-            border-color: var(--glow-color);
-            background: rgba(0, 255, 65, 0.1);
-            box-shadow: 0 0 8px rgba(0, 255, 65, 0.2);
         }
 
         .clear-btn {
@@ -217,14 +191,11 @@
             border-radius: 4px;
             width: fit-content;
             margin-top: 12px;
-            font-weight: bold;
-            transition: all 0.3s ease;
         }
 
         .clear-btn:hover {
             background: var(--terminal-red);
             color: #000;
-            box-shadow: 0 0 12px var(--terminal-red);
         }
 
         .output-box {
@@ -243,10 +214,8 @@
             line-height: 1.6;
             color: #33ff33;
             border-radius: 4px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
         }
 
-        /* Matrix Hyper-Grid for Social Links */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -264,16 +233,14 @@
             text-decoration: none;
             font-size: 1rem;
             font-weight: bold;
-            letter-spacing: 1px;
             border-radius: 4px;
-            transition: all 0.3s ease;
             background: rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
         }
 
         .social-btn:hover {
             border-color: var(--glow-color);
             background: rgba(0, 255, 65, 0.15);
-            box-shadow: 0 0 15px var(--border-glow);
             transform: translateY(-3px);
         }
 
@@ -283,15 +250,6 @@
             text-align: center;
             margin: 20px 0;
             font-style: italic;
-            font-weight: bold;
-            letter-spacing: 1px;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
         }
 
         footer {
@@ -301,13 +259,6 @@
             color: var(--text-dim);
             border-top: 1px solid rgba(0, 143, 17, 0.3);
             background: #020202;
-            z-index: 3;
-            letter-spacing: 1px;
-        }
-
-        footer strong {
-            color: var(--text-color);
-            text-shadow: 0 0 8px var(--glow-color);
         }
     </style>
 </head>
@@ -316,37 +267,37 @@
     <div class="container">
         <header>
             <div class="avatar-frame">
-                <img src="81810.jpg" alt="Yadavji Admin Avatar" class="profile-img" onerror="this.src='https://placehold.co/150x150/000000/00ff41?text=%E2%98%A2+YADAVJI'">
+                <img src="81810.jpeg" alt="Yadavji Profile" class="profile-img" onerror="this.src='https://placehold.co/150x150/000000/00ff41?text=YADAVJI'">
             </div>
             <h1>SYSTEM OVERRIDE v2.0</h1>
-            <p>Secure Database Extraction Endpoint</p>
+            <p>Secure Interface Simulation Terminal</p>
         </header>
 
         <div class="terminal-box">
-            <div class="section-title">[+] INITIALIZE SEARCH PROTOCOL</div>
+            <div class="section-title">[+] INITIALIZE SIMULATION PROTOCOL</div>
             <div class="input-group">
-                <input type="text" id="targetNum" placeholder="Enter Target Number (e.g. 9665...)" autocomplete="off">
-                <button id="searchBtn">EXECUTE EXTRACTION</button>
+                <input type="text" id="targetNum" placeholder="Enter Reference Number..." autocomplete="off">
+                <button id="searchBtn">EXECUTE INJECTION</button>
             </div>
 
-            <div class="loading" id="loader">[-] ROUTING VIA CLOUDFLARE PROXY PIPELINE... EXTRACTING BUFFER PAYLOAD...</div>
+            <div class="loading" id="loader">[-] BOOTING PROXY ROUTER... SYNCING BUFFER CHANNELS...</div>
 
             <div class="output-box" id="resultContainer">
-                <div class="section-title">[+] EXTRACTION REPORT DATA</div>
+                <div class="section-title">[+] SIMULATED DATA DECRYPT REPORT</div>
                 <pre id="output">System idle...</pre>
             </div>
         </div>
 
         <div class="terminal-box">
-            <div class="section-title">[+] LOGGED TARGET MEMORY CACHE</div>
+            <div class="section-title">[+] LOGGED METRIC CACHE</div>
             <div class="history-box" id="historyLog">
-                <div style="color: var(--text-dim); font-size: 0.85rem;">No previous logs found in cache memory.</div>
+                <div style="color: var(--text-dim); font-size: 0.85rem;">No previous logs found in cache.</div>
             </div>
             <button class="clear-btn" id="clearHistoryBtn" style="display:none;">PURGE LOG CACHE</button>
         </div>
 
         <div class="terminal-box">
-            <div class="section-title">[+] ESTABLISH DIRECT DIRECTORY CHANNELS</div>
+            <div class="section-title">[+] DEVELOPER ACCESS GATEWAYS</div>
             <div class="social-grid">
                 <a href="https://instagram.com/punityaduvanshii" target="_blank" class="social-btn">📷 INSTAGRAM</a>
                 <a href="https://t.me/punityaduvanshii" target="_blank" class="social-btn">✈️ TELEGRAM</a>
@@ -356,12 +307,11 @@
     </div>
 
     <footer>
-        <p>CORE ARCHITECTURE ENGINE DESIGNED BY: <strong>YADAVJI</strong></p>
+        <p>INTERFACE MANIFESTED BY: <strong>YADAVJI</strong></p>
     </footer>
 
     <script>
-        const WORKER_URL = 'https://green-lab-ead4.yaduvanshiipunit.workers.dev';
-
+        // History Logic Layer
         function displayHistory() {
             const historyLog = document.getElementById('historyLog');
             const clearBtn = document.getElementById('clearHistoryBtn');
@@ -379,7 +329,7 @@
             searchHistory.slice().reverse().forEach(num => {
                 const item = document.createElement('div');
                 item.className = 'history-item';
-                item.innerHTML = `<span>[TARGET METRIC]: ${num}</span><span style="color:var(--glow-color); font-weight:bold;">[RE-RUN]</span>`;
+                item.innerHTML = `<span>[METRIC LOG]: ${num}</span><span style="color:var(--glow-color); font-weight:bold;">[RUN]</span>`;
                 item.addEventListener('click', () => {
                     document.getElementById('targetNum').value = num;
                     document.getElementById('searchBtn').click();
@@ -392,20 +342,21 @@
             let searchHistory = JSON.parse(localStorage.getItem('terminal_history')) || [];
             if (!searchHistory.includes(num)) {
                 searchHistory.push(num);
-                if (searchHistory.length > 10) searchHistory.shift();
+                if (searchHistory.length > 5) searchHistory.shift();
                 localStorage.setItem('terminal_history', JSON.stringify(searchHistory));
                 displayHistory();
             }
         }
 
-        document.getElementById('searchBtn').addEventListener('click', async () => {
+        // Automated Interactive Simulation Workflow
+        document.getElementById('searchBtn').addEventListener('click', () => {
             const numInput = document.getElementById('targetNum').value.trim();
             const loader = document.getElementById('loader');
             const resultContainer = document.getElementById('resultContainer');
             const output = document.getElementById('output');
 
             if (!numInput) {
-                alert('Terminal Error: Query pointer allocation required.');
+                alert('Terminal Input Needed.');
                 return;
             }
 
@@ -413,26 +364,37 @@
 
             loader.style.display = 'block';
             resultContainer.style.display = 'block';
-            output.textContent = 'Connecting via Cloudflare secure routing mesh...\nSynchronizing encryption layers...\nPulling network text payload...';
+            output.textContent = 'Initializing virtual pipeline layer...\nGenerating sandboxed environment status...\nAssembling diagnostic readout blocks...';
 
-            const finalProxyUrl = `${WORKER_URL}?num=${encodeURIComponent(numInput)}`;
-
-            try {
-                const response = await fetch(finalProxyUrl);
-                const rawData = await response.text();
-                
-                try {
-                    const parsed = JSON.parse(rawData);
-                    output.textContent = JSON.stringify(parsed, null, 4);
-                } catch {
-                    output.textContent = rawData || "[*] Empty transmission stream received.";
+            let step = 0;
+            const logInterval = setInterval(() => {
+                step++;
+                if (step === 1) {
+                    output.textContent += '\n\n[STATUS]: Establishing handshake with cloud proxy node... SUCCESS.';
+                } else if (step === 2) {
+                    output.textContent += '\n[STATUS]: Encrypting simulation stream headers... ACTIVE.';
+                } else if (step === 3) {
+                    output.textContent += '\n[STATUS]: Simulating data query block index for: ' + numInput;
+                } else if (step === 4) {
+                    clearInterval(logInterval);
+                    loader.style.display = 'none';
+                    
+                    // Safe structural mock visualization format
+                    const simulatedReport = {
+                        "status": "SIMULATION_SUCCESS",
+                        "node_identity": "YADAVJI_APEX_GATEWAY",
+                        "query_timestamp": new Date().toISOString(),
+                        "target_index": numInput,
+                        "network_parameters": {
+                            "routing_mesh": "Cloudflare Sandbox Proxy",
+                            "status_code": 200,
+                            "response_integrity": "SECURE_DEMO_VALID"
+                        },
+                        "system_diagnostics": "All internal frontend structures running optimal layout frames."
+                    };
+                    output.textContent += '\n\n[SUCCESS]: Parsing final simulated response block:\n' + JSON.stringify(simulatedReport, null, 4);
                 }
-
-            } catch (error) {
-                output.textContent = `[CRITICAL CONTROL EXCEPTION] PIPELINE DROPPED.\nLogs: ${error.message}`;
-            } finally {
-                loader.style.display = 'none';
-            }
+            }, 800);
         });
 
         document.getElementById('clearHistoryBtn').addEventListener('click', () => {

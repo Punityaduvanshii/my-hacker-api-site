@@ -3,237 +3,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YADAVJI // TERMINAL-ACCESS</title>
+    <title>YADAVJI // DATA PARSING TERMINAL</title>
     <style>
         :root {
-            --glow-color: #00ff41;
+            --primary-color: #00ff00;
             --bg-color: #050505;
-            --panel-bg: #0d0d0d;
-            --text-color: #00ff41;
-            --text-dim: #008f11;
+            --panel-bg: #0f0f0f;
+            --text-color: #00ff00;
+            --error-color: #ff0033;
+            --warning-color: #ffcc00;
+            --font-family: 'Courier New', Courier, monospace;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            min-height: 100vh;
+            font-family: var(--font-family);
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 2;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
+            min-height: 100vh;
         }
 
         .container {
+            max-width: 900px;
+            margin: 0 auto;
             width: 100%;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            z-index: 3;
+            flex: 1;
         }
 
-        header {
+        /* Top Header Image Banner Section */
+        .banner-container {
+            width: 100%;
+            height: 220px;
+            border: 1px solid var(--primary-color);
+            border-bottom: none;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .banner-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+            /* Cyberpunk matrix green tint effect */
+            filter: grayscale(1) sepia(1) hue-rotate(85deg) saturate(3) brightness(0.7);
+        }
+
+        .banner-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px dashed var(--text-dim);
-            padding-bottom: 20px;
+            text-shadow: 0 0 15px #000;
+            width: 100%;
+            pointer-events: none;
         }
 
-        header h1 {
+        .banner-text h1 {
             font-size: 2rem;
-            text-shadow: 0 0 10px var(--glow-color);
-            letter-spacing: 2px;
-            margin-bottom: 5px;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px var(--primary-color);
+            color: #fff;
         }
 
-        header p {
-            color: var(--text-dim);
-            font-size: 0.9rem;
+        /* Dashboard Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .terminal-box {
             background-color: var(--panel-bg);
-            border: 1px solid var(--text-color);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-            padding: 25px;
-            border-radius: 5px;
+            border: 1px solid var(--primary-color);
+            border-radius: 2px;
+            padding: 15px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .input-wrapper {
+            display: flex;
             gap: 10px;
-            margin-bottom: 20px;
         }
 
         input[type="text"] {
-            width: 100%;
+            flex: 1;
             background: #000;
-            border: 1px solid var(--text-dim);
-            padding: 12px;
-            color: var(--text-color);
-            font-size: 1.1rem;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px;
+            font-family: var(--font-family);
+            font-size: 1rem;
             outline: none;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--glow-color);
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
         }
 
         button {
-            background: transparent;
-            border: 1px solid var(--text-color);
-            color: var(--text-color);
-            padding: 12px 20px;
-            font-size: 1rem;
-            cursor: pointer;
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            font-family: var(--font-family);
             font-weight: bold;
+            cursor: pointer;
             text-transform: uppercase;
-            transition: all 0.3s ease;
-            margin-top: 10px;
         }
 
         button:hover {
-            background: var(--text-color);
+            background-color: var(--primary-color);
             color: #000;
-            box-shadow: 0 0 15px var(--glow-color);
+            box-shadow: 0 0 10px var(--primary-color);
         }
 
-        .output-box {
-            margin-top: 25px;
-            border-top: 1px dashed var(--text-dim);
-            padding-top: 20px;
-            display: none;
-        }
-
-        pre {
-            background: #000;
-            border: 1px solid var(--text-dim);
-            padding: 15px;
-            overflow-x: auto;
+        .console-output {
+            background-color: #000;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            padding: 12px;
+            min-height: 250px;
+            font-size: 0.85rem;
+            overflow-y: auto;
+            max-height: 400px;
             white-space: pre-wrap;
-            word-wrap: break-word;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #33ff33;
         }
 
-        .loading {
-            display: none;
-            color: var(--text-color);
+        /* History Sidebar Panel */
+        .sidebar-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .history-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .history-item {
+            padding: 8px;
+            border: 1px dashed rgba(0, 255, 0, 0.3);
+            margin-bottom: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            background: #000;
             text-align: center;
-            margin: 15px 0;
-            font-style: italic;
+        }
+
+        .history-item:hover {
+            background: rgba(0, 255, 0, 0.1);
+            border-style: solid;
+        }
+
+        /* Connect Hub Section */
+        .social-box {
+            background: #000;
+            border: 1px solid var(--primary-color);
+            padding: 12px;
+        }
+
+        .social-link {
+            display: block;
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 8px;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            margin-top: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: #000;
+            box-shadow: 0 0 8px var(--primary-color);
+        }
+
+        .log-warn { color: var(--warning-color); }
+        .log-err { color: var(--error-color); }
+        .loading { animation: blink 1s infinite; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            border-top: 1px solid rgba(0, 143, 17, 0.2);
-            background: #000;
-            z-index: 3;
-        }
-
-        footer strong {
-            color: var(--text-color);
-            text-shadow: 0 0 5px var(--glow-color);
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header>
-            <h1>SYSTEM OVERRIDE v1.0</h1>
-            <p>TARGET DATABASE SEARCH TERMINAL</p>
-        </header>
-
-        <div class="terminal-box">
-            <div class="input-group">
-                <label for="targetNum">Enter Target Number:</label>
-                <input type="text" id="targetNum" placeholder="e.g. 919876543210" autocomplete="off">
-                <button id="searchBtn">EXECUTE EXTRACTION</button>
-            </div>
-
-            <div class="loading" id="loader">[-] BYPASSING CORS & FETCHING DATA... PLEASE WAIT...</div>
-
-            <div class="output-box" id="resultContainer">
-                <h3>[+] EXTRACTION REPORT:</h3>
-                <pre id="output">Awaiting command...</pre>
+        <div class="banner-container">
+            <img class="banner-image" src="https://lh3.googleusercontent.com/d/1_9iLby1ZcT5V18N61p2-wshXmZzBvSia" alt="Shri Krishna Cyber Banner" onerror="this.src='https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000'">
+            <div class="banner-text">
+                <h1>YADAVJI SYSTEM INTERFACE</h1>
+                <p style="font-size: 0.75rem; letter-spacing: 1px; color: #888;">CENTRAL DATA ROUTING MANAGEMENT</p>
             </div>
         </div>
+
+        <div class="dashboard-grid">
+            <div class="terminal-box">
+                <div class="input-group">
+                    <label for="phone-number">> TARGET QUERY SELECTION:</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="phone-number" placeholder="Enter standard parameter..." autocomplete="off">
+                        <button id="search-btn" onclick="initiateRequest()">QUERY</button>
+                    </div>
+                </div>
+
+                <div style="font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">> TERMINAL FEED:</div>
+                <div class="console-output" id="output-screen">System idle... Waiting for entry packet.</div>
+            </div>
+
+            <div class="sidebar-panel">
+                <div class="terminal-box" style="flex: 1;">
+                    <div style="font-size: 0.85rem; border-bottom: 1px solid var(--primary-color); padding-bottom: 5px; font-weight: bold;">
+                        [#] SEARCH HISTORY
+                    </div>
+                    <ul class="history-list" id="history-box">
+                        <li style="color: #666; font-size: 0.8rem; text-align: center;">No active cache logs.</li>
+                    </ul>
+                </div>
+
+                <div class="social-box">
+                    <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; text-align: center; border-bottom: 1px dashed rgba(0,255,0,0.3); padding-bottom: 5px;">
+                        [!] CONNECT HUB
+                    </div>
+                    <a href="https://instagram.com/punityaduvanshii" target="_blank" class="social-link">INSTAGRAM PROFILE</a>
+                    <a href="https://t.me/Punityaduvanshii" target="_blank" class="social-link">TELEGRAM CHANNEL</a>
+                    <a href="https://wa.me/966507241344" target="_blank" class="social-link">WHATSAPP CHAT</a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            SYSTEM DESIGN ARCHITECTURE BY: <span style="text-shadow: 0 0 5px var(--primary-color);">Yadavji</span>
+        </footer>
     </div>
 
-    <footer>
-        <p>SYSTEM POWERED & DEVELOPED BY: <strong>YADAVJI</strong></p>
-    </footer>
-
     <script>
-        document.getElementById('searchBtn').addEventListener('click', async () => {
-            const numInput = document.getElementById('targetNum').value.trim();
-            const loader = document.getElementById('loader');
-            const resultContainer = document.getElementById('resultContainer');
-            const output = document.getElementById('output');
+        let searchHistoryCache = [];
 
-            if (!numInput) {
-                alert('Please enter a number!');
+        function initiateRequest() {
+            const queryValue = document.getElementById('phone-number').value.trim();
+            const outputScreen = document.getElementById('output-screen');
+            
+            if (!queryValue) {
+                outputScreen.innerHTML = `<span class="log-err">[!] ERROR: Query value cannot be empty.</span>`;
                 return;
             }
 
-            loader.style.display = 'block';
-            resultContainer.style.display = 'block';
-            output.textContent = 'Bypassing restriction walls...\nRequesting target data payload...';
+            updateHistoryLog(queryValue);
 
-            // CORS Bypass Proxy integration
-            const targetUrl = `https://anishexploits.com/api/api.php?key=KEY_FB68D42B_RAONUMB&type=number&num=${encodeURIComponent(numInput)}`;
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+            // API Endpoint Integration
+            const destinationUrl = `https://anishexploits.com/api/api.php?key=KEY_FB68D42B_RAONUMB&type=number&num=${queryValue}`;
+            
+            outputScreen.innerHTML = `[~] Initiating internal handshake matrix...\n`;
+            
+            // Starts auto-retry function: 3 attempts maximum, 1.5s delay between failures
+            performRequestWithRetry(destinationUrl, queryValue, 3, 1500);
+        }
+
+        // Recursive auto-retry mechanism
+        async function performRequestWithRetry(url, query, maxRetries, delayTime) {
+            const outputScreen = document.getElementById('output-screen');
+            let currentAttempt = 4 - maxRetries;
 
             try {
-                const response = await fetch(proxyUrl);
-                if (!response.ok) throw new Error('Proxy server failed to fetch.');
-
-                const jsonWrapper = await response.json();
-                let rawData = jsonWrapper.contents; 
-
-                try {
-                    const parsed = JSON.parse(rawData);
-                    output.textContent = JSON.stringify(parsed, null, 4);
-                } catch {
-                    output.textContent = rawData || "[-] Empty payload returned from database.";
+                outputScreen.innerHTML += `[~] Transferring data packet [Attempt #${currentAttempt}]...\n`;
+                
+                const connectionResult = await fetch(url);
+                
+                if (!connectionResult.ok) {
+                    throw new Error(`HTTP Error Code: ${connectionResult.status}`);
                 }
 
-            } catch (error) {
-                output.textContent = `[ERROR] EXTRACTION FAILED.\nDetails: ${error.message}\nTip: Check if the original API key is active or try again.`;
-            } finally {
-                loader.style.display = 'none';
-            }
-        });
+                const serializedData = await connectionResult.json();
+                
+                outputScreen.innerHTML += `[+] Node connection stable. Content parsed successfully.\n\n`;
+                outputScreen.innerHTML += JSON.stringify(serializedData, null, 4);
 
-        document.getElementById('targetNum').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('searchBtn').click();
+            } catch (networkError) {
+                outputScreen.innerHTML += `<span class="log-warn">[!] Direct connection packet dropped: ${networkError.message}</span>\n`;
+                
+                if (maxRetries > 1) {
+                    outputScreen.innerHTML += `<span class="log-warn">[~] Server busy. Pausing for ${delayTime/1000}s before automatic retry sequence...</span>\n\n`;
+                    
+                    await new Promise(resolve => setTimeout(resolve, delayTime));
+                    return performRequestWithRetry(url, query, maxRetries - 1, delayTime);
+                } else {
+                    outputScreen.innerHTML += `<span class="log-err">\n[!] CRITICAL: Max request attempts reached.\n[i] Resolution: Server endpoint is unresponsive. Refresh or retry after some time.</span>`;
+                }
+            }
+        }
+
+        // History Tracker Logic
+        function updateHistoryLog(newItem) {
+            if (!searchHistoryCache.includes(newItem)) {
+                searchHistoryCache.unshift(newItem);
+                if (searchHistoryCache.length > 5) searchHistoryCache.pop();
+                
+                const historyBox = document.getElementById('history-box');
+                historyBox.innerHTML = '';
+                
+                searchHistoryCache.forEach(entry => {
+                    const itemElement = document.createElement('li');
+                    itemElement.className = 'history-item';
+                    itemElement.innerText = `>> ${entry}`;
+                    itemElement.onclick = () => {
+                        document.getElementById('phone-number').value = entry;
+                        initiateRequest();
+                    };
+                    historyBox.appendChild(itemElement);
+                });
+            }
+        }
+
+        document.getElementById("phone-number").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                initiateRequest();
             }
         });
     </script>
